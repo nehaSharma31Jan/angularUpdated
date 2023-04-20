@@ -1,0 +1,81 @@
+<app-navbar [type]=""></app-navbar>
+
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-md-12">
+      <h1 class="text-center">Movie List</h1>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-4" *ngFor="let movie of movies">
+      <div class="card mb-4 shadow-sm">
+        <img class="card-img-top" src="{{movie.poster}}" alt="{{movie.name}}" style="height: 300px; object-fit: cover;">
+        <div class="card-body">
+          <h5 class="card-title">{{movie.name}}</h5>
+          <p class="card-text">{{movie.description}}</p>
+          <div class="d-flex justify-content-between align-items-center">
+            <div class="btn-group">
+              <a routerLink="/movie/{{movie._id}}" class="btn btn-primary">View Details</a>
+              <button *ngIf="user" routerLink="/book/{{movie._id}}" class="btn btn-warning">Book Ticket</button><br>
+             
+              <!-- added interested button -->
+              <button class="btn btn-primary" (click)="open(content1)" style="margin-left: 10px;">Interested </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<ng-template #content1 let-c="close" let-d="dismiss">
+	<div class="modal-header">
+		<h4 class="modal-title" id="modal-basic-title">Provide your valuable feedback Here!</h4>
+		<button type="button" class="btn-close" aria-label="Close" (click)="d('Cross click')"></button>
+	</div>
+	<div class="modal-body">
+
+    <div class="input-group mb-3">
+      <div class="input-group-prepend">
+        <span class="input-group-text" id="basic-addon1">@example.com</span>
+      </div>
+      <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
+    </div>
+    
+    <div class="input-group mb-3">
+      <input type="password" class="form-control" placeholder="Password" aria-label="Recipient's username" aria-describedby="basic-addon2">
+      <div class="input-group-append">
+        <span class="input-group-text" id="basic-addon2"></span>
+      </div>
+    </div>
+		
+<ng-template #t let-fill="fill">
+	<i class="bi-heart-fill">
+		<i *ngIf="fill > 0" class="bi-heart-fill filled" [style.width.%]="fill"></i>
+	</i>
+</ng-template>
+
+<ngb-rating
+	[(rate)]="currentRate"
+	[starTemplate]="t"
+	[readonly]="true"
+	[max]="5"
+	[ariaValueText]="ariaValueText"
+></ngb-rating>
+
+<hr />
+<pre>Your Rating: <b>{{currentRate}}</b></pre>
+<button class="btn btn-sm btn-outline-primary me-2" (click)="currentRate = 1">1</button>
+<button class="btn btn-sm btn-outline-primary me-2" (click)="currentRate = 2">2</button>
+<button class="btn btn-sm btn-outline-primary me-2" (click)="currentRate = 3">3</button>
+<button class="btn btn-sm btn-outline-primary me-2" (click)="currentRate = 4">4</button>
+<button class="btn btn-sm btn-outline-primary me-2" (click)="currentRate = 5">5</button>
+<!-- NOW ADDING THE USERNAME LOGIN BUTTON -->
+
+	</div>
+	<div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="currentRate = 0">Clear</button>
+		<button type="button" class="btn btn-outline-dark" (click)="c('Save click')">Save</button>
+	</div>
+</ng-template>
